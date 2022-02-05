@@ -12,7 +12,9 @@ Solid principles helps in reducing tight coupling between classes in our code. T
   
 Now lets break each of the principles down and get a better understanding of each of these principles.
 
-#### Single Responsibility Principle<a name="srp"></a> [View Example Here](single-responsibility%20principle/)
+
+#### Single Responsibility Principle<a name="srp"></a> 
+[view full source code](single-responsibility%20principle/)
 Single responsibility principle states that
 > A class should have one and only one        responsibility. Which means your class should have only one job.
 
@@ -145,8 +147,11 @@ Now we can send an email by simply doing this
     const mailer = new Mailer("hello kwame", [new HtmlFormatter(), new TextFormatter()])
     mailer.send();
 ```
+[view full source code](single-responsibility%20principle/)
+
 
 #### Open-closed Principle<a name="ocp"></a>
+[view full source code](open-closed%20principle/)
 > This principle states that a class must be open for extension but close for modification.
 
 This principle focus on the fact that the class must be easily extended without changing the contents of the class. If we follow this principle well we can actually change the behaviour of our class without ever touching any original piece of code. This also means if a Developer named Fred works on a certain feature and another Developer named Kwame wants to add some changes, then Kwame should be able to do that easily by extending on the features Fred has already provided.
@@ -244,8 +249,11 @@ In our mailer class we can now create a new `PostMarkSmtpService` or `SendGridSm
 ```
 
 With this implementaion a developer can keep extending the `MailerSmtpService` to support more mailing service without modifying the existing logic in the `MailerSmtpService`.
+[view full source code](open-closed%20principle/)
+
 
 #### Liskov Substitution principle<a name="lsp"></a>
+[view full source code](liskov%20substitution%20principle/)
 This principle states that
 > Derived or child classes must be substitutable for their base or parent classes. 
 
@@ -371,8 +379,11 @@ Now lets see a better approach:
 
 Now you can see from the code refactor we have a new interface `IStyles` as well as our previous interface `IFormatter`. Also the `HtmlFormatter` class implements both the `IStyles` and `IFormatter` interface whiles the `TextFormatter` class implements only the `IFormatter` interface. This now makes our code cleaner and ensures the right methods are been implement in the classes that needs them. Now our `TextFormatter` class does not need to implement the `custom_styles` method since we have removed the `custom_styles` method from the `IFormatter` interface to a new interface (`IStyles`). This makes our code more maintainable and scalable. 
 This is the `Interface Segregation Principle` at work. 
+[view full source code](liskov%20substitution%20principle/)
+
 
  #### Dependency Inversion Principle<a name="dip"></a>
+ [view full source code](interface%20segregation%20and%20dependency%20inversion%20principle/)
 This principle is divided into two parts and it states that
 > - High-level modules/classes should not depend on low-level modules/classes. Both should depend on abstractions.
 > - Abstractions should not depend on details. Details should depend on abstractions.
@@ -410,3 +421,4 @@ class Mailer {
 Now lets look at the refactor of the `Mailer` class from our first example `(the first principle - Single responsibility principle)`. 
 You can see we now have a `_mailerFormats` property which takes an array of `IFormatter` objects (`_mailerFormats: Array<IFormatter>;`). This means any class that implements the `IFormatter` interface can be stored in this array. 
 Also our mailer class doesn't need to know about what formatter we are going to use, all it cares about is the formatter is implementing an `IFormatter` interface and it has a format method which we can call with ease. This will allow our `Mailer` class to be loosely coupled with our `HtmlFormatter` and `TextFormatter` class.
+[view full source code](interface%20segregation%20and%20dependency%20inversion%20principle/)
