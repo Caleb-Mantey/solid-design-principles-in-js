@@ -1,0 +1,22 @@
+{
+  "name": "solid-principles",
+  "version": "1.0.0",
+  "description": "One fundmental software principle is the __SOLID PRINCIPLE__ which is ussually refered to the as *the first five principles of object oriented design*. This principle was formulated by _Robert C. Martin_ (also known as **Uncle Bob**). In this article we will be using javascript to explain certain concepts. Javascript doesn't support features like interfaces and abstract classes but with the addition of typescript we can write javascript like we do in other languages like c# and java. So in this article we will be using typescript too.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Caleb-Mantey/solid-design-principles-in-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Caleb-Mantey/solid-design-principles-in-js/issues"
+  },
+  "homepage": "https://github.com/Caleb-Mantey/solid-design-principles-in-js#readme",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}

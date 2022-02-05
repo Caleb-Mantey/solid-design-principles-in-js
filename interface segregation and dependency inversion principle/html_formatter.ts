@@ -1,9 +1,8 @@
 // const FormatterInterface = require("./formatter_interface");
-import { IFormatter } from './interfaces/formatter_interface'
-import { IStyles } from './interfaces/styles_interface';
+import { IFormatter } from "./interfaces/formatter_interface";
+import { IStyles } from "./interfaces/styles_interface";
 
 class HtmlFormatter implements IFormatter, IStyles {
-
   format(mail: string) {
     // sends html version of mail
     mail = `<html>
@@ -15,8 +14,8 @@ class HtmlFormatter implements IFormatter, IStyles {
   }
 
   custom_css(): string {
-    return "<style>body{background-color: blue}</style>"
+    return "<style>body{background-color: blue}</style>";
   }
 }
 
-module.exports = HtmlFormatter;
+export default HtmlFormatter;

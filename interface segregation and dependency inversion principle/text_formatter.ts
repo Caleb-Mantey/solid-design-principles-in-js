@@ -1,7 +1,6 @@
-import { IFormatter } from './interfaces/formatter_interface'
+import { IFormatter } from "./interfaces/formatter_interface";
 
 class TextFormatter implements IFormatter {
-
   format(mail: string) {
     // sends text version of mail
     mail = "Text Version \n" + mail;
@@ -10,4 +9,4 @@ class TextFormatter implements IFormatter {
   }
 }
 
-module.exports = TextFormatter;
+export default TextFormatter;
