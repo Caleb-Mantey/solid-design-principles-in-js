@@ -257,6 +257,7 @@ With this implementaion a developer can keep extending the `MailerSmtpService` t
 
 #### Liskov Substitution principle<a name="lsp"></a>
 [view full source code](liskov%20substitution%20principle/)
+
 This principle states that
 > Derived or child classes must be substitutable for their base or parent classes. 
 
@@ -273,6 +274,7 @@ For example:
 
  #### Interface Segregation Principle<a name="isp"></a>
  [view full source code](interface%20segregation%20and%20dependency%20inversion%20principle/)
+
 This principle states that
 > Do not force any client to implement an interface which is irrelevant to them.
 
@@ -387,6 +389,7 @@ This is the `Interface Segregation Principle` at work.
 
  #### Dependency Inversion Principle<a name="dip"></a>
  [view full source code](interface%20segregation%20and%20dependency%20inversion%20principle/)
+
 This principle is divided into two parts and it states that
 > - High-level modules/classes should not depend on low-level modules/classes. Both should depend on abstractions.
 > - Abstractions should not depend on details. Details should depend on abstractions.
