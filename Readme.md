@@ -1,7 +1,7 @@
 ### SOLID Design Principles
-One fundmental software principle is the __SOLID PRINCIPLE__ which is ussually refered to the as *the first five principles of object oriented design*. This principle was formulated by _Robert C. Martin_ (also known as **Uncle Bob**). In this article we will be using javascript to explain certain concepts. Javascript doesn't support features like interfaces and abstract classes but with the addition of typescript we can write javascript like we do in other languages like c# and java. So in this article we will be using typescript too.
+One fundamental software principle is the __SOLID PRINCIPLE__ which is usually referred to as *the first five principles of object oriented design*. This principle was formulated by _Robert C. Martin_ (also known as **Uncle Bob**). In this article we will be using javascript to explain certain concepts. Javascript doesn't support features like interfaces and abstract classes but with the addition of typescript we can write javascript like we do in other languages like c# and java. So in this article we will be using typescript too.
 
-Solid principles helps in reducing tight coupling between classes in our code. Tight coupling is when a group of classes highly depend on one another. Loose coupling is the opposite of tight coupling and this approach makes our code more reusable, readable, flexible, stable and maintainable. It is advisable to avoid tight coupling as much as possible and always make your code is loosely coupled.
+Solid principles helps in reducing tight coupling between classes in our code. Tight coupling is when a group of classes highly depend on one another. Loose coupling is the opposite of tight coupling and this approach makes our code more reusable, readable, flexible, stable and maintainable. It is advisable to avoid tight coupling as much as possible and always make your code as loosely coupled as possible.
 
 **SOLID** stands for
 - S - [Single Responsibility Principle](#srp)
@@ -10,11 +10,12 @@ Solid principles helps in reducing tight coupling between classes in our code. T
 - I - [Interface Segregation Principle](#isp)
 - D - [Dependency Inversion Principle](#dip)
   
-Now lets break each of the principles down and get a better understanding of each of these principles.
+Now let's break each of the principles down and get a better understanding of each of these principles.
 
 
 #### Single Responsibility Principle<a name="srp"></a> 
 [view full source code](single-responsibility%20principle/)
+
 Single responsibility principle states that
 > A class should have one and only one        responsibility. Which means your class should have only one job.
 
@@ -54,6 +55,9 @@ You have a mailer class that connects to an smtp service, takes an email process
             return this.mail;
         }
     }
+
+    const mailer = new Mailer("hello kwame");
+    mailer.send();
 ```
 
 This code does not follow the single responsibility principle  the mailer class is responsible for doing all the following
@@ -62,19 +66,10 @@ This code does not follow the single responsibility principle  the mailer class 
 - Format the mail in html format
 - Sending the mail
 
-This will make the `Mailer` class very difficult to maintain. Let's say for example we want to change the smtp provider we are using we will have to come into this class and do some changes to the `smtp_service_connection` method and this can get tricky and messy if the new provider does'nt implement a `send` method but a `deliver` method then we will have to also come and change this line ` this.smtpService.send(this.format_html_mail())` in our `send` method to ` this.smtpService.deliver(this.format_html_mail())`. All these is a result of the fact that our class is not performing only one functionality.
+This will make the `Mailer` class very difficult to maintain. Let's say for example we want to change the smtp provider we are using we will have to come into this class and do some changes to the `smtp_service_connection` method and this can get tricky and messy if the new provider does not implement a `send` method but a `deliver` method then we will have to also come and change this line ` this.smtpService.send(this.format_html_mail())` in our `send` method to ` this.smtpService.deliver(this.format_html_mail())`. All these is a result of the fact that our class is not performing only one functionality.
 
 
-##### Better Approach
-A more better approach is seen below where we divide all the task into seperate classes. We now have the following.
-- A class that connects to the smtp service (TextFormatter)
-- A class that formats our mail in text (MailerSmtpService)
-- A class that formats our mail in html (HtmlFormatter)
-- A class responsible for sending the mailer (Mailer)
-
-You can see now the code looks better and our smtp service can be changed easily in only one class which does not affect the other parts of the mailing systems behaviour. If we use a new smtp service and it implements a `deliver` method instead of a `send` method then we only have to change one method (we change `this.smtp_con.send(mail)` to `this.smtp_con.deliver(mail)`) in the `MailerSmtpService` class. This will not affect other parts of our application and our app will still function properly. The Mailer class takes an instance of an smtp service and only sends a mail (__NOTE:__ `It is performing one and only one job to send mail`)
-
-Also our `HtmlFormatter` and `TextFormatter` are doing just one thing formating the mail in the right format.
+### Better Approach
 
 #### Mailer
 ```javascript
@@ -87,7 +82,7 @@ Also our `HtmlFormatter` and `TextFormatter` are doing just one thing formating 
 
         send(){
             // Loops through mail formats and calls the send method
-            this.mailerFormats.forEach((formater) => this.smtpService.send(formater.format(this.mail)))
+            this.mailerFormats.forEach((formatter) => this.smtpService.send(formatter.format(this.mail)))
         }
     }
 ```
@@ -142,6 +137,16 @@ Also our `HtmlFormatter` and `TextFormatter` are doing just one thing formating 
     }
 ```
 
+A more better approach is seen above where we divide all the task into separate classes. We now have the following.
+- A class that connects to the smtp service (MailerSmtpService)
+- A class that formats our mail in text (TextFormatter)
+- A class that formats our mail in html (HtmlFormatter)
+- A class responsible for sending the mail (Mailer)
+
+You can see now the code looks better and our smtp service can be changed easily in only one class which does not affect the other parts of the mailing systems behavior. If we use a new smtp service and it implements a `deliver` method instead of a `send` method then we only have to change one method (we change `this.smtp_con.send(mail)` to `this.smtp_con.deliver(mail)`) in the `MailerSmtpService` class. This will not affect other parts of our application and our app will still function properly. The Mailer class takes an instance of an smtp service and only sends a mail (__NOTE:__ `It is performing one and only one job to send mail`)
+
+Also our `HtmlFormatter` and `TextFormatter` are doing just one thing formatting the mail in the right format.
+
 Now we can send an email by simply doing this 
 ```javascript
     const mailer = new Mailer("hello kwame", [new HtmlFormatter(), new TextFormatter()])
@@ -154,7 +159,7 @@ Now we can send an email by simply doing this
 [view full source code](open-closed%20principle/)
 > This principle states that a class must be open for extension but close for modification.
 
-This principle focus on the fact that the class must be easily extended without changing the contents of the class. If we follow this principle well we can actually change the behaviour of our class without ever touching any original piece of code. This also means if a Developer named Fred works on a certain feature and another Developer named Kwame wants to add some changes, then Kwame should be able to do that easily by extending on the features Fred has already provided.
+This principle focus on the fact that the class must be easily extended without changing the contents of the class. If we follow this principle well we can actually change the behavior of our class without ever touching any original piece of code. This also means if a Developer named Fred works on a certain feature and another Developer named Kwame wants to add some changes, then Kwame should be able to do that easily by extending on the features Fred has already provided.
 
 Lets take an example from our `MailerSmtpService` class in the first example and lets make it support this principle.
 
@@ -243,7 +248,7 @@ In our mailer class we can now create a new `PostMarkSmtpService` or `SendGridSm
 
         send(){
             // Loops through mail formats and calls the send method
-            this.mailerFormats.forEach((formater) => this.smtpService.send(formater.format(this.mail)))
+            this.mailerFormats.forEach((formatter) => this.smtpService.send(formatter.format(this.mail)))
         }
     }
 ```
@@ -398,21 +403,21 @@ In our previous example we created two new interfaces `IStyles` and `IFormatter`
 #### Mailer
 ```typescript
 class Mailer {
-    _mail: string;
-    _mailerFormats: Array<IFormatter>; // abstraction
-    _smtpService: MailerSmtpService;
+    mail: string;
+    mailerFormats: Array<IFormatter>; // abstraction
+    smtpService: MailerSmtpService;
 
 
     constructor(mail: string, mailerFormats: Array<IFormatter>/*abstraction*/) {
-        this._mail = mail;
-        this._mailerFormats = mailerFormats;
-        this._smtpService = new SendGridSmtpService();
+        this.mail = mail;
+        this.mailerFormats = mailerFormats;
+        this.smtpService = new SendGridSmtpService();
     }
 
     send() {
         // Loops through mail formats and calls the send method
-        this._mailerFormats.forEach((formater) =>
-        this._smtpService.send(formater.format(this._mail))
+        this.mailerFormats.forEach((formatter) =>
+        this.smtpService.send(formatter.format(this._mail))
         );
     }
 }
