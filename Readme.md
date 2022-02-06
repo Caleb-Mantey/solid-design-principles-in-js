@@ -152,7 +152,6 @@ Now we can send an email by simply doing this
     const mailer = new Mailer("hello kwame", [new HtmlFormatter(), new TextFormatter()])
     mailer.send();
 ```
-[view full source code](single-responsibility%20principle/)
 
 
 #### Open-closed Principle<a name="ocp"></a>
@@ -254,7 +253,6 @@ In our mailer class we can now create a new `PostMarkSmtpService` or `SendGridSm
 ```
 
 With this implementaion a developer can keep extending the `MailerSmtpService` to support more mailing service without modifying the existing logic in the `MailerSmtpService`.
-[view full source code](open-closed%20principle/)
 
 
 #### Liskov Substitution principle<a name="lsp"></a>
@@ -274,6 +272,7 @@ For example:
  
 
  #### Interface Segregation Principle<a name="isp"></a>
+ [view full source code](interface%20segregation%20and%20dependency%20inversion%20principle/)
 This principle states that
 > Do not force any client to implement an interface which is irrelevant to them.
 
@@ -384,7 +383,6 @@ Now lets see a better approach:
 
 Now you can see from the code refactor we have a new interface `IStyles` as well as our previous interface `IFormatter`. Also the `HtmlFormatter` class implements both the `IStyles` and `IFormatter` interface whiles the `TextFormatter` class implements only the `IFormatter` interface. This now makes our code cleaner and ensures the right methods are been implement in the classes that needs them. Now our `TextFormatter` class does not need to implement the `custom_styles` method since we have removed the `custom_styles` method from the `IFormatter` interface to a new interface (`IStyles`). This makes our code more maintainable and scalable. 
 This is the `Interface Segregation Principle` at work. 
-[view full source code](liskov%20substitution%20principle/)
 
 
  #### Dependency Inversion Principle<a name="dip"></a>
@@ -426,4 +424,3 @@ class Mailer {
 Now lets look at the refactor of the `Mailer` class from our first example `(the first principle - Single responsibility principle)`. 
 You can see we now have a `_mailerFormats` property which takes an array of `IFormatter` objects (`_mailerFormats: Array<IFormatter>;`). This means any class that implements the `IFormatter` interface can be stored in this array. 
 Also our mailer class doesn't need to know about what formatter we are going to use, all it cares about is the formatter is implementing an `IFormatter` interface and it has a format method which we can call with ease. This will allow our `Mailer` class to be loosely coupled with our `HtmlFormatter` and `TextFormatter` class.
-[view full source code](interface%20segregation%20and%20dependency%20inversion%20principle/)
